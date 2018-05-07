@@ -1,0 +1,56 @@
+# Colin Hans
+# april 11th
+# v .01
+# hosts damage dice
+# =============================
+# imports
+import random
+# =============================
+# global var
+damage = 0
+# =============================
+class Dice(object):
+
+    def __init__(self,amount):
+        self.amount = amount
+        self.__d2 = False
+        self.__d4 = False
+        self.__d6 = False
+        self.__d8 = False
+        self.__d10 = False
+        self.__diceType()
+
+    def __diceType(self):
+        if self.amount < 5:
+            self.__d2 = True
+        elif self.amount > 5 < 10:
+            self.__d4 = True
+        elif self.amount > 10 < 15:
+            self.__d6 = True
+        elif self.amount > 15 < 20:
+            self.__d8 = True
+        elif self.amount > 20:
+            self.__d10 = True
+
+    def rollDamage(self):
+        global damage
+        if self.__d2:
+            damage = random.randint(1,2)
+            return damage
+        if self.__d4:
+            damage = random.randint(1,4)
+            return damage
+        if self.__d6:
+            damage = random.randint(1,6)
+            return damage
+        if self.__d8:
+            damage = random.randint(1,8)
+            return damage
+        if self.__d10:
+            damage = random.randint(1,10)
+            return damage
+
+    def rollHit(self):
+        hit = random.randint(1,20)
+        if hit > 13:
+            self.rollDamage()
