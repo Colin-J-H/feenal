@@ -1,0 +1,16 @@
+from graphics import *
+
+class map(object):
+
+    def __init__(self,win):
+        self.win = win
+        self.map = Image(Point(600,350),"images/Map.png")
+
+    def draw(self):
+        self.map.draw(self.win)
+
+    def getPixel(self):
+        mouseX = self.win.getCurrentMouseLocation.x
+        mouseY = self.win.getCurrentMouseLocation.y
+        pixel = self.map.getPixel(mouseX,mouseY)
+        return pixel
