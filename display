@@ -1,0 +1,58 @@
+# the game loop
+from animations import *
+from map import *
+
+win = GraphWin("Fight", 1200, 700, autoflush=False)
+tank = Tank(win)
+plane = Plane(win)
+map = map(win)
+map.draw()
+oldMouseClickX = win.mouseX
+oldMouseClickY = win.mouseY
+objectSelected = False
+selectedObject = None
+
+
+while True:
+    tank.draw()
+    plane.draw()
+    win.update()
+    newMouseClickX = win.mouseX
+    newMouseClickY = win.mouseY
+    key = win.checkKey()
+
+    # A click occurs because the old (x,y) doesn't equal the new (x,y)
+    if newMouseClickX != oldMouseClickX or newMouseClickY != oldMouseClickY:
+
+        # Reset the old (x,y)
+        oldMouseClickX = newMouseClickX
+        oldMouseClickY = newMouseClickY
+
+        # If an object is selected, determine which one and toggle the boolean variable
+        # Tank
+        if not objectSelected and newMouseClickX > tank.x - 45 and newMouseClickX < tank.x + 45\
+                and newMouseClickY > tank.y - 20 and newMouseClickY < tank.y + 30:
+            selectedObject = "tank"
+            objectSelected = True
+
+        # Airplane
+        elif not objectSelected and newMouseClickX > plane.x - 20 and newMouseClickX < plane.x + 20\
+                and newMouseClickY > plane.y - 15 and newMouseClickY < plane.y + 15:
+            selectedObject = "plane"
+            objectSelected = True
+
+        # If a new click has been made and an existing object was already selected, move it.
+        elif objectSelected:
+            if selectedObject == "tank":
+                tank.move(newMouseClickX, newMouseClickY)
+            if selectedObject == "plane":
+                plane.move(newMouseClickX, newMouseClickY)
+
+            selectedObject = None
+            objectSelected = False
+
+
+    time.sleep(.05)
+    tank.undraw()
+    plane.undraw()
+
