@@ -1,0 +1,74 @@
+import dice
+from map import *
+class Tank(object):
+    """tank object that displays on screen"""
+    def __init__(self,window):
+        self.tankHealth = 20
+        self.x = 300
+        self.y = 300
+        self.window = window
+        self.redTank = [Image(Point(300,300), "images/RTMove1.png"),
+                        Image(Point(300,300) , "images/RTMove2.png"),
+                        Image(Point(300, 300), "images/RTShoot1.png"),
+                        Image(Point(300, 300), "images/RTShoot2.png"),
+                        Image(Point(300, 300), "images/RTShoot3.png"),
+                        Image(Point(300, 300), "images/RTShoot4.png")]
+        self.imageIteratorMove = -1
+
+
+    def draw(self):
+        keys = self.window.checkKeys()
+        self.imageIteratorMove += 1
+        # checks if r, if r displays shooting animation
+        if self.imageIteratorMove > 2 and "r" not in keys:
+            self.imageIteratorMove = 0
+        if self.imageIteratorMove == 5 and "r" in keys:
+            self.imageIteratorMove = 0
+        self.redTank[self.imageIteratorMove].anchor = Point(self.x, self.y)
+        self.redTank[self.imageIteratorMove].draw(self.window)
+
+
+    def undraw(self):
+        """undraws"""
+        self.redTank[self.imageIteratorMove].undraw()
+
+    def move(self, mouseX, mouseY):
+        self.x = mouseX
+        self.y = mouseY
+
+
+
+class Plane(Tank):
+    """plane object on screen"""
+    def __init__(self, window):
+        super().__init__(window)
+        self.planeHealth = 20
+        self.x = 350
+        self.y = 350
+        self.redPlane = [Image(Point(350, 350), "images/RPMove1.png"),
+                        Image(Point(350, 350), "images/RPMove2.png"),
+                        Image(Point(350,350), "images/RPShoot1.png"),
+                        Image(Point(350,350), "images/RPShoot2.png"),
+                        Image(Point(350,350), "images/RPShoot3.png"),
+                        Image(Point(350,350), "images/RPShoot4.png")]
+        self.imageIteratorMove = -1
+
+
+
+    def draw(self):
+        """draws the move"""
+        keys = self.window.checkKeys()
+        # check if q, if q run through shooting animation
+        self.imageIteratorMove += 1
+        if self.imageIteratorMove > 2 and "q" not in keys:
+            self.imageIteratorMove = 0
+        if self.imageIteratorMove == 5 and "q" in keys:
+            self.imageIteratorMove = 0
+
+        self.redPlane[self.imageIteratorMove].anchor = Point(self.x, self.y)
+        self.redPlane[self.imageIteratorMove].draw(self.window)
+
+    def undraw(self):
+        """undraws"""
+        self.redPlane[self.imageIteratorMove].undraw()
+
